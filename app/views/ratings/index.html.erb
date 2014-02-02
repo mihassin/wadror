@@ -2,9 +2,12 @@
 
 <p>Number of ratings: <%= @ratings.count %> </p>
 
-<ul>    
+<ul>
   <% @ratings.each do |rating| %>
-    <li> <%= rating %> <%= link_to 'Destroy', rating, method: :delete, data: { confirm: "Are you sure?" } %> </li>
+    <li>
+      <%= rating %>
+      <%= link_to rating.user.username, user_path(rating.user) %>
+    </li>
   <% end %>
 </ul>
 

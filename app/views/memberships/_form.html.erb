@@ -1,0 +1,17 @@
+<%= form_for(@membership) do |f| %>
+  <% if @membership.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@membership.errors.count, "error") %> prohibited this membership from being saved:</h2>
+
+      <ul>
+      <% @membership.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.select :beer_club_id, options_from_collection_for_select(@beer_club, :id, :to_s) %>
+  <%= hidden_field_tag(:user_id, current_user) %>
+  <%= f.submit "Join" %>
+<% end %>

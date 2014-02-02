@@ -4,12 +4,14 @@
   <%= @user.username %>
 </h1>
 
-<p>
-  member of
-  <% @user.memberships.each do |member| %>
-    <%= link_to member.beer_club, beer_club_path(member.beer_club) %>
-  <% end %>
-</p>
+<% if not @user.memberships.count.nil? %>
+  <p>
+    member of
+    <% @user.memberships.each do |member| %>
+      <%= link_to member.beer_club, beer_club_path(member.beer_club) %>
+    <% end %>
+  </p>
+<% end %>
 
 <% if @user.ratings.count == 0 %>
 <p>no contributions</p>

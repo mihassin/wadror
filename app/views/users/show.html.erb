@@ -4,7 +4,9 @@
   <%= @user.username %>
 </h1>
 
-<% if not @user.memberships.count.nil? %>
+<% if @user.memberships.count == 0 %>
+  <p>not a member in any clubs</p>
+<% else %>
   <p>
     member of
     <% @user.memberships.each do |member| %>

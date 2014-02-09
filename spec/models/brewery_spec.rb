@@ -1,8 +1,5 @@
 require 'spec_helper'
 
-BeerClub
-BeerClubController
-
 describe Brewery do
   it "without a name is not valid" do
     brewery = Brewery.create year:1674

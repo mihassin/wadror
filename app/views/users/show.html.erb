@@ -15,6 +15,31 @@
   </p>
 <% end %>
 
+<p>favorite beer:
+  <% if @user.favorite_beer.nil? %>
+    none
+  <% else %>
+    <%= @user.favorite_beer.name %>
+  <% end %>
+</p>
+
+<p>favorite style:
+  <% if @user.favorite_style.nil? %>
+    none
+  <% else %>
+    <%= @user.favorite_style %>
+  <% end %>
+</p>
+
+<p>favorite brewery:
+  <% if @user.favorite_brewery.nil? %>
+    none
+  <% else %>
+    <%= @user.favorite_brewery.name %>
+  <% end %>
+</p>
+
+
 <% if @user.ratings.count == 0 %>
 <p>no contributions</p>
 <% else %>

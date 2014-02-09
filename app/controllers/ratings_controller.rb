@@ -11,7 +11,9 @@ class RatingsController < ApplicationController
   def create
     @rating = Rating.new params.require(:rating).permit(:score, :beer_id)
 
-    if @rating.save
+    if current_user.nil?
+      redirect_to signing_path, notice:"Sign in first!"
+    elsif @rating.save
       current_user.ratings << @rating
       redirect_to user_path current_user
     else

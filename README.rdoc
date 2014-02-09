@@ -1,3 +1,4 @@
 http://pure-cove-2154.herokuapp.com/
 
 {<img src="https://travis-ci.org/mihassin/wadror.png?branch=master" alt="Build Status" />}[https://travis-ci.org/mihassin/wadror]
+{<img src="https://codeclimate.com/github/mihassin/wadror.png" />}[https://codeclimate.com/github/mihassin/wadror]

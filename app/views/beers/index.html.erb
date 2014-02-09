@@ -25,5 +25,6 @@
 </table>
 
 <br>
-
-<%= link_to 'New Beer', new_beer_path %>
+<% if not current_user.nil? %>
+  <%= link_to 'New Beer', new_beer_path %>
+<% end %>

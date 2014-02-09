@@ -17,14 +17,15 @@
         <td><%= link_to beer.name, beer %></td>
         <td><%= beer.style %></td>
         <td><%= link_to beer.brewery.name, brewery_path(beer.brewery_id) %></td>
+        <% unless current_user.nil? %>
         <td><%= link_to 'Edit', edit_beer_path(beer) %></td>
-        <td><%= link_to 'Destroy', beer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', beer, method: :delete, data: { confirm: 'Are you sure?' } if current_user.admin? %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-<% if not current_user.nil? %>
-  <%= link_to 'New Beer', new_beer_path %>
-<% end %>
+
+<%= link_to('New Beer', new_beer_path) if current_user %>

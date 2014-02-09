@@ -12,7 +12,7 @@ class RatingsController < ApplicationController
     @rating = Rating.new params.require(:rating).permit(:score, :beer_id)
 
     if current_user.nil?
-      redirect_to signing_path, notice:"Sign in first!"
+      redirect_to signin_path, notice:"Sign in first!"
     elsif @rating.save
       current_user.ratings << @rating
       redirect_to user_path current_user
@@ -21,7 +21,7 @@ class RatingsController < ApplicationController
       render :new
     end
   end
-  
+
   def destroy
     rating = Rating.find(params[:id])
     rating.delete if current_user == rating.user

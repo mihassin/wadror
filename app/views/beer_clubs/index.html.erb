@@ -22,4 +22,4 @@
 
 <br>
 
-<%= link_to 'Create a New Beer club', new_beer_club_path %>
+<%= link_to('Create a New Beer club', new_beer_club_path) unless current_user.nil? %>

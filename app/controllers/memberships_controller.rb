@@ -11,7 +11,7 @@ class MembershipsController < ApplicationController
   # GET /memberships/new
   def new
     @membership = Membership.new
-    @beer_club = BeerClub.all
+    @beer_club = BeerClub.all.reject{ |b| b.members.include? current_user }
   end
 
   # GET /memberships/1/edit
@@ -21,15 +21,15 @@ class MembershipsController < ApplicationController
   # POST /memberships
   # POST /memberships.json
   def create
-    @beer_club = BeerClub.all
     @membership = Membership.new(membership_params)
+    @membership.user = current_user
 
     respond_to do |format|
       if @membership.save
-        current_user.memberships << @membership
-        format.html { redirect_to beer_club_path(@membership.beer_club.id), notice: 'Membership was successfully created.' }
+        format.html { redirect_to beer_club_path(@membership.beer_club.id), notice: current_user.username+', welcome to the club!.' }
         format.json { render action: 'show', status: :created, location: @membership }
       else
+        @beer_club = BeerClub.all.reject{ |b| b.members.include? current_user }
         format.html { render action: 'new' }
         format.json { render json: @membership.errors, status: :unprocessable_entity }
       end

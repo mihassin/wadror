@@ -1,6 +1,9 @@
 require 'spec_helper'
 include OwnTestHelper
 
+
+#BeerClub
+#BeerClubController
 describe "User" do
   before :each do
     FactoryGirl.create :user

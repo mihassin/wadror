@@ -42,6 +42,10 @@ gem 'bcrypt-ruby', '~> 3.1.2'
 # gem 'debugger', group: [:development, :test]
 gem 'byebug', group: [:development, :test]
 
+gem 'httparty'
+
+gem 'rails-settings-cached', '0.3.1'
+
 group :development, :test do
  gem 'sqlite3'
 end
@@ -57,4 +61,5 @@ group :test do
  gem 'factory_girl_rails'
  gem 'capybara'
  gem 'launchy'
+ gem 'webmock'
 end

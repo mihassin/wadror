@@ -9,6 +9,8 @@ class BeermappingApi
     places.select{ |place| place.id == id}.first
   end
 
+  private
+
   def self.fetch_by_place_id(id)
     url = "http://beermapping.com/webservice/locquery/#{key}"
     response = HTTParty.get "#{url}#{ERB::Util.url_encode(id)}"
@@ -17,7 +19,7 @@ class BeermappingApi
   end
 
   def self.fetch_places_in(city)
-    url = "http://beermapping.com/webservice/loccity/#{key}"
+    url = "http://beermapping.com/webservice/loccity/#{key}/"
 
     response = HTTParty.get "#{url}#{ERB::Util.url_encode(city)}"
     places = response.parsed_response["bmp_locations"]["location"]
@@ -25,12 +27,12 @@ class BeermappingApi
     return [] if places.is_a?(Hash) and places['id'].nil?
 
     places = [places] if places.is_a?(Hash)
-    @places = places.inject([]) do | set, place |
+    places.inject([]) do | set, place |
       set << Place.new(place)
     end
   end
 
   def self.key
-    "f2e47b5772ce371c40ebda30e350da27"
+    Settings.beermapping_apikey
   end
 end

@@ -1,14 +1,19 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @style.name %>
-</p>
+<h1><%= @style.name %></h1>
 
 <p>
-  <strong>Description:</strong>
   <%= @style.description %>
 </p>
 
-<%= link_to 'Edit', edit_style_path(@style) %> |
-<%= link_to 'Back', styles_path %>
+<h4>beers</h4>
+<ul>
+  <% @style.beers.each do |b| %>
+    <li><%= b %></li>
+  <% end %>
+</ul>
+
+<% unless current_user.nil? %>
+  <%= link_to 'Edit', edit_style_path(@style) %>
+  <%= link_to 'Destroy', style_path, method:  :delete, data: {confirm: "Are you sure?" } %>
+<% end %>

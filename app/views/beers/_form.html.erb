@@ -17,7 +17,7 @@
   </div>
   <div class="field">
     <%= f.label :style %><br>
-    <%= f.select :style, options_for_select(@styles, selected: @beer.style) %>
+    <%= f.select :style_id, options_from_collection_for_select(@styles, :id, :name, selected: @beer.style) %>
   </div>
   <div class="field">
     <%= f.label :brewery %><br>

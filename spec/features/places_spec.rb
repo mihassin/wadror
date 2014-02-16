@@ -5,7 +5,7 @@ describe "Places" do
     arr = Array.new
     unless places.nil?
       places.each do |place|
-        arr.push( Place.new(:name => place) )
+        arr.push( Place.new(id: 1, name: place) )
       end
     end
     return arr

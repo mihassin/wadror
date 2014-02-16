@@ -6,14 +6,14 @@ describe 'Beer' do
   before :each do
     FactoryGirl.create :user
     FactoryGirl.create :brewery
+    FactoryGirl.create :style
     sign_in(username:"Pekka", password:"Foobar1")
   end
 
   it "has valid name" do
     visit new_beer_path
-    #save_and_open_page
     fill_in('beer_name', with:"Koff")
-    select('Lager', from:'beer[style]')
+    select('Lager', from:'beer[style_id]')
     select('anonymous', from:"beer[brewery_id]")
     click_button('Create Beer')
 

@@ -1,6 +1,14 @@
 class RatingsController < ApplicationController
+  before_action :ensure_that_signed_in
+  before_action :ensure_that_admin, only: [:destroy]
+
   def index
     @ratings = Rating.all
+    @top_beers = Beer.top 3
+    @top_breweries = Brewery.top 3
+    @top_styles = Style.top 3
+    @most_active = User.most_active 3
+    @recent = Rating.recent
   end
 
   def new

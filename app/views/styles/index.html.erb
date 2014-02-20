@@ -1,8 +1,13 @@
 <h1>Listing styles</h1>
 
-<ul>
-  <% @styles.each do |style| %>
-    <li><%= link_to style.name, style %></li>
-  <% end %>
-</ul>
+<% @styles.each do |style| %>
+  <div>
+  <h4><%= link_to style.name, style %></h4>
+
+  <%= style.description %>
+  </div>
+<% end %>
+
+<br>
+
 <%= link_to('New Style', new_style_path, class:"btn btn-primary") unless current_user.nil? %>

@@ -50,7 +50,7 @@ describe "beerlist page" do
     find('table').find('tr:nth-child(4)').should have_content('Weizen')
   end
 
-  it "when click style-link, order changes", :js => true do
+  it "when click brewery-link, order changes", :js => true do
     click_link "brewery"
     find('table').find('tr:nth-child(2)').should have_content('Ayinger')
     find('table').find('tr:nth-child(3)').should have_content('Koff')

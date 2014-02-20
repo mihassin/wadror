@@ -23,4 +23,5 @@
 <p>Has <%= pluralize(@brewery.ratings.count, 'rating') %>, average <%= @brewery.average_rating  %>
 
 <br>
-<%= link_to 'Edit', edit_brewery_path(@brewery) %>
+<%= link_to 'Edit', edit_brewery_path(@brewery), class:"btn btn-primary" %>
+<%= link_to link_to('Destroy', @brewery, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger") if current_user.admin?%>

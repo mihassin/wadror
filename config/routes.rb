@@ -29,4 +29,8 @@ Ratebeer::Application.routes.draw do
 
   delete 'signout', to: 'sessions#destroy'
   #get 'signout', to: 'sessions#destroy'
+
+  get 'beerlist', to: 'beers#list'
+  get 'ngbeerlist', to: 'beers#nglist'
+  get 'brewerylist', to: 'breweries#list'
 end

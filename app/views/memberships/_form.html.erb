@@ -13,5 +13,5 @@
 
   <%= f.select :beer_club_id, options_from_collection_for_select(@beer_club, :id, :to_s) %>
   <%= hidden_field_tag(:user_id, current_user) %>
-  <%= f.submit "Join" %>
+  <%= f.submit "Join", class:"btn btn-primary"%>
 <% end %>

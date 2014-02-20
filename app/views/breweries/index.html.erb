@@ -1,12 +1,10 @@
 <h1>Listing breweries</h1>
 <p>Number of breweries: <%= @breweries.count %></p>
-<table>
+<table class="table table-hover">
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Year</th>
-      <th></th>
-      <th></th>
+      <th><%= link_to 'Name', breweries_path(order: "name") %></th>
+      <th><%= link_to 'Year', breweries_path(order: "year") %></th>
     </tr>
   </thead>
 
@@ -15,10 +13,6 @@
       <tr>
         <td><%= link_to brewery.name, brewery %></td>
         <td><%= brewery.year %></td>
-        <% unless current_user.nil? %>
-        <td><%= link_to('Edit', edit_brewery_path(brewery)) %></td>
-        <td><%= link_to('Destroy', brewery, method: :delete, data: { confirm: 'Are you sure?' }) if current_user.admin?%></td>
-        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -26,4 +20,4 @@
 
 <br>
 
-<%= link_to('New Brewery', new_brewery_path) unless current_user.nil? %>
+<%= link_to('New Brewery', new_brewery_path, class:"btn btn-primary") unless current_user.nil? %>

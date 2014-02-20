@@ -7,6 +7,13 @@ class BreweriesController < ApplicationController
   # GET /breweries.json
   def index
     @breweries = Brewery.all
+
+    order = params[:order] || 'name'
+
+    case order
+      when 'name' then @breweries.sort_by!{ |b| b.name }
+      when 'year' then @breweries.sort_by!{ |b| b.year }
+    end
   end
 
   # GET /breweries/1
@@ -23,6 +30,8 @@ class BreweriesController < ApplicationController
   def edit
   end
 
+  def list
+  end
   # POST /breweries
   # POST /breweries.json
   def create

@@ -8,12 +8,10 @@
 
   <tbody>
     <% item.each do |i| %>
-      <% unless i.average_rating.nil? %>
-        <tr>
-          <td><%= link_to i.name, i %></td>
-          <td><%= i.average_rating.round(2) %></td>
-        </tr>
-      <% end %>
+      <tr>
+        <td><%= link_to i.name, i %></td>
+        <td><%= round(i.average_rating) %></td>
+      </tr>
     <% end %>
   </tbody>
 </table>

@@ -24,5 +24,4 @@
   <% end %>
 <% end %>
 
-<%= link_to 'Edit', edit_beer_club_path(@beer_club), class:"btn btn-primary" %>
-<%= link_to link_to('Destroy', @beer_club, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger") if current_user.admin?%>
+<%= edit_and_destroy_buttons(@beer_club) %>

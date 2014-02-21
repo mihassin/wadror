@@ -37,29 +37,24 @@
   <% end %>
 </p>
 
-
 <% if @user.ratings.count == 0 %>
-<p>no contributions</p>
+  <p>no contributions</p>
 <% else %>
-<p>
-  has made <%= pluralize(@user.ratings.count, 'rating') %>, average <%= @user.average_rating %>
-</p>
+  <p>has made <%= pluralize(@user.ratings.count, 'rating') %>, average <%= round(@user.average_rating) %></p>
 
-<h3>ratings</h3>
+  <h3>ratings</h3>
 
-<ul>
-  <% @user.ratings.each do |rating| %>
-    <li>
-      <%= rating %>
-      <% if @user == current_user %>
-        <%= link_to 'Destroy', rating, method: :delete, data: { confirm: "Are you sure?" } %>
+  <ul>
+    <% @user.ratings.each do |rating| %>
+      <li>
+          <%= rating %>
+          <% if @user == current_user %>
+            <%= link_to 'Destroy', rating, method: :delete, data: { confirm: "Are you sure?" } %>
+          <% end %>
+        </li>
       <% end %>
-    </li>
-  <% end %>
-</ul>
+    </ul>
 <% end %>
 
-<% if @user == current_user %>
-  <%= link_to 'Edit profile', edit_user_path, class:"btn btn-primary"%>
-  <%= link_to 'Delete account', user_path, method:  :delete, data: {confirm: "Are you sure?" }, class:"btn btn-danger" %>
-<% end %>
+<%= edit_and_destroy_buttons(@user) %>
+

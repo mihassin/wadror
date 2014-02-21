@@ -16,6 +16,7 @@ FactoryGirl.define do
   factory :brewery do
     name "anonymous"
     year 1990
+    active true
   end
 
   factory :style do

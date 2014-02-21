@@ -34,7 +34,7 @@ describe "Rating" do
     rating_data
     visit ratings_path
 
-    expect(page).to have_content "Number of ratings: #{Rating.count}"
+    expect(page).to have_content "Ratings total: #{Rating.count}"
     expect(page).to have_content "Iso 3"
     expect(page).to have_content "Karhu"
   end
@@ -48,6 +48,7 @@ describe "Rating" do
 
   it "after creation destroy, removes from db" do
     create_rating(beer:"Iso 3", score:"10")
+
     click_link "Destroy"
 
     expect(Rating.count).to eq(0)

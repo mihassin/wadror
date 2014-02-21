@@ -1,6 +1,5 @@
 class RatingsController < ApplicationController
   before_action :ensure_that_signed_in
-  before_action :ensure_that_admin, only: [:destroy]
 
   def index
     @ratings = Rating.all

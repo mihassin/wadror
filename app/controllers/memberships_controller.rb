@@ -23,6 +23,7 @@ class MembershipsController < ApplicationController
   def create
     @membership = Membership.new(membership_params)
     @membership.user = current_user
+    @membership.confirmed = false
 
     respond_to do |format|
       if @membership.save
@@ -57,6 +58,17 @@ class MembershipsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to memberships_url }
       format.json { head :no_content }
+    end
+  end
+
+  def toggle_confirmation
+    membership = Membership.find(params[:id])
+    unless membership.beer_club.member?(current_user)
+      redirect_to :back, notice:'You are not a member of this Beer Club'
+    else
+      membership.confirmed = true
+      membership.save
+      redirect_to :back, notice:"Confirmed membership of #{membership.user.username}"
     end
   end
 

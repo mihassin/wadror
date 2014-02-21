@@ -3,7 +3,9 @@ Ratebeer::Application.routes.draw do
 
   root 'breweries#index'
 
-  resources :memberships
+  resources :memberships do
+    post 'toggle_confirmation', on: :member
+  end
 
   resources :beer_clubs
 
@@ -11,7 +13,9 @@ Ratebeer::Application.routes.draw do
 
   resources :beers
 
-  resources :breweries
+  resources :breweries do
+    post 'toggle_activity', on: :member
+  end
 
   resources :ratings, only: [:index, :new, :create, :destroy]
 

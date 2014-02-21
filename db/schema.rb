@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140220161938) do
+ActiveRecord::Schema.define(version: 20140221162655) do
 
   create_table "beer_clubs", force: true do |t|
     t.string   "name"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20140220161938) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "confirmed"
   end
 
   create_table "ratings", force: true do |t|

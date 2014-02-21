@@ -1,0 +1,17 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+  <h2 class="panel-title"><%= title %></h2>
+  </div>
+  <div class="panel-body">
+    <ul class="list-group">
+      <% members.each do |member| %>
+        <li class="list-group-item">
+          <%= link_to member.user.username, member.user %>
+          <% if confirm %>
+            <%= link_to "Confirm", toggle_confirmation_membership_path(member.id), method: :post, class:"btn btn-primary" %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

@@ -14,6 +14,8 @@ class BeerClubsController < ApplicationController
   def show
     @membership = Membership.new
     @membership.beer_club = @beer_club
+    @confirmed = Membership.where(confirmed:true, beer_club_id:@beer_club.id)
+    @unconfirmed = Membership.where(confirmed:[nil,false], beer_club_id:@beer_club.id)
   end
 
   # GET /beer_clubs/new
@@ -32,6 +34,7 @@ class BeerClubsController < ApplicationController
 
     respond_to do |format|
       if @beer_club.save
+        @beer_club.memberships.create user_id:current_user.id, confirmed:true
         format.html { redirect_to @beer_club, notice: 'Beer club was successfully created.' }
         format.json { render action: 'show', status: :created, location: @beer_club }
       else

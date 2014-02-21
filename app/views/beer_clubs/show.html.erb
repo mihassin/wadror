@@ -4,24 +4,18 @@
   is located at <%= @beer_club.city %>
 </p>
 
-<ul>
-  <% @beer_club.users.each do |user| %>
-    <li>
-      <%= link_to user.username, user %>
-    </li>
-  <% end %>
-</ul>
+<%= render 'list', members: @confirmed, title:"Members", confirm:false %>
 
-<p>Number of members: <%= @beer_club.memberships.count %> </p>
+<%= render 'list', members: @unconfirmed, title:"Outstanding applications", confirm:true  %>
 
 <% if current_user %>
 <% unless current_user.beer_clubs.include?(@beer_club) %>
   <%= form_for(@membership) do |f| %>
     <%= f.hidden_field :beer_club_id %>
     <%= f.hidden_field :user_id %>
-    <%= f.submit value:"join the club" %>
+    <%= f.submit value:"join the club", class:"btn btn-primary"%>
   <% end %>
   <% end %>
 <% end %>
-
+<br>
 <%= edit_and_destroy_buttons(@beer_club) %>

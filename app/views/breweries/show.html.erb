@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <h2><%= @brewery.name %>
   <% unless @brewery.active %>
     <span class="label label-info">retired</span>
@@ -26,5 +24,8 @@
 <% end %>
 <br>
 
+<%= link_to "change activity", toggle_activity_brewery_path(@brewery.id), method: :post, class: "btn btn-primary" %>
+<br>
+<br>
 <%= edit_and_destroy_buttons(@brewery) %>
 

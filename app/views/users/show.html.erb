@@ -7,8 +7,8 @@
 <% else %>
   <p>
     member of
-    <% @user.memberships.each do |member| %>
-      <%= link_to member.beer_club, beer_club_path(member.beer_club) %>
+    <% @user.memberships.confirmed.each do |member| %>
+      <%= link_to member.beer_club, member.beer_club %>
     <% end %>
   </p>
 <% end %>

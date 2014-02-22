@@ -2,6 +2,17 @@ class BreweriesController < ApplicationController
   before_action :set_brewery, only: [:show, :edit, :update, :destroy]
   before_action :ensure_that_signed_in, except: [:index, :show]
   before_action :ensure_that_admin, only: [:destroy]
+  before_action :expiring, only: [:create, :update, :destroy]
+  before_action :skip_if_cached, only: [:index]
+
+  def expiring
+    expire_fragment('beerlist')
+  end
+
+  def skip_if_cached
+    @order = params[:order] || 'name'
+    return render :index if fragment_exist?( 'brewerylist' )
+  end
 
   # GET /breweries
   # GET /breweries.json
@@ -10,9 +21,7 @@ class BreweriesController < ApplicationController
     @active_breweries = Brewery.active
     @retired_breweries = Brewery.retired
 
-    order = params[:order] || 'name'
-
-    case order
+    case @order
       when 'name' then @breweries.sort_by!{ |b| b.name }
       when 'year' then @breweries.sort_by!{ |b| b.year }
     end

@@ -3,20 +3,25 @@ class BeersController < ApplicationController
   before_action :set_brewery_and_style, only: [:create, :edit, :new]
   before_action :ensure_that_signed_in, except: [:index, :show, :list]
   before_action :ensure_that_admin, only: [:destroy]
+  before_action :expiring, only: [:create, :update, :destroy]
+  before_action :skip_if_cached, only: [:index]
 
   def set_brewery_and_style
     @breweries = Brewery.all
     @styles = Style.all
   end
 
+  def skip_if_cached
+    @order = params[:order] || 'name'
+    return render :index if fragment_exist?( 'beerlist' )
+  end
+
   # GET /beers
   # GET /beers.json
   def index
-    @beers = Beer.all
+    @beers = Beer.includes(:brewery, :style).all
 
-    order = params[:order] || 'name'
-
-    case order
+    case @order
       when 'name' then @beers.sort_by!{ |b| b.name }
       when 'style' then @beers.sort_by!{ |b| b.style.name }
       when 'brewery' then @beers.sort_by!{ |b| b.brewery.name }
@@ -93,5 +98,9 @@ class BeersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def beer_params
       params.require(:beer).permit(:name, :style_id, :brewery_id)
+    end
+
+    def expiring
+      expire_fragment('beerlist')
     end
 end

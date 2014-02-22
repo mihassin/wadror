@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
 
   def favorite_beer
     return nil if ratings.empty?
-    ratings.order(score: :desc).limit(1).first.beer
+    ratings.sort_by{ |r| r.score}.last.beer
   end
 
   def favorite_style

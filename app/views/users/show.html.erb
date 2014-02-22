@@ -2,17 +2,8 @@
   <%= @user.username %>
 </h1>
 
-<% if @user.memberships.count == 0 %>
-  <p>not a member in any clubs</p>
-<% else %>
-  <p>
-    member of
-    <% @user.memberships.confirmed.each do |member| %>
-      <%= link_to member.beer_club, member.beer_club %>
-    <% end %>
-  </p>
-<% end %>
-
+<div class="panel panel-default">
+<div class="panel-body">
 <p>favorite beer:
   <% if @user.favorite_beer.nil? %>
     none
@@ -36,6 +27,31 @@
     <%= @user.favorite_brewery.name %>
   <% end %>
 </p>
+</div>
+</div>
+
+<h2>Beer Clubs</h2>
+<% if @user.memberships.count == 0 %>
+  <p>not a member in any clubs</p>
+<% else %>
+  <% @user.memberships.each do |member| %>
+  <% if member.confirmed %>
+  <p>
+    member of
+    <ul>
+      <li><%= link_to member.beer_club, member.beer_club %></li>
+     </ul>
+  </p>
+  <% else %>
+  <p>
+    applied membership of
+    <ul>
+      <li><%= link_to member.beer_club, member.beer_club %></li>
+    </ul>
+  </p>
+  <% end %>
+  <% end %>
+<% end %>
 
 <% if @user.ratings.count == 0 %>
   <p>no contributions</p>

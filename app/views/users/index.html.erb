@@ -1,7 +1,19 @@
-<h1>Listing users</h1>
+<h1>Users</h1>
 
-  <ul>
+<table class="table table-hover">
+  <thead>
+    <th> </th>
+    <th> rated beers </th>
+    <th> total ratings </th>
+  </thead>
+  <tbody>
     <% @users.each do |user| %>
-        <li><%= link_to user.username, user %></li>
+      <tr>
+        <td><%= link_to user.username, user %></td>
+        <td><%= user.favorite_beer %></td>
+        <td><%= user.beers.size %></td>
+        <td><%= user.ratings.size %></td>
+      </tr>
     <% end %>
-  </ul>
+  </tbody>
+</table>

@@ -41,3 +41,5 @@
 
 <h3>Recent ratings</h3>
 <%= render 'list', ratings:@recent %>
+Ratings total: <%= @ratings.count %>
+<%= link_to "Create a rating", new_rating_path, class:"btn btn-primary" %>

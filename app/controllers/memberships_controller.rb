@@ -1,5 +1,6 @@
 class MembershipsController < ApplicationController
   before_action :set_membership, only: [:show, :edit, :update, :destroy]
+  before_action :ensure_that_admin, only: [:destroy, :show, :index, :edit, :update]
 
   def index
     @memberships = Membership.all
@@ -18,12 +19,16 @@ class MembershipsController < ApplicationController
   def edit
   end
 
-  # POST /memberships
-  # POST /memberships.json
-  def create
+  def new_member
     @membership = Membership.new(membership_params)
     @membership.user = current_user
     @membership.confirmed = false
+  end
+
+  # POST /memberships
+  # POST /memberships.json
+  def create
+    new_member
 
     respond_to do |format|
       if @membership.save
@@ -54,11 +59,7 @@ class MembershipsController < ApplicationController
   # DELETE /memberships/1
   # DELETE /memberships/1.json
   def destroy
-    @membership.destroy
-    respond_to do |format|
-      format.html { redirect_to memberships_url }
-      format.json { head :no_content }
-    end
+    destroy_item(@membership, memberships_url)
   end
 
   def toggle_confirmation

@@ -18,4 +18,12 @@ class ApplicationController < ActionController::Base
     ensure_that_signed_in
     redirect_to :back, notice:'only admins are allowed' unless current_user.admin?
   end
+
+  def destroy_item(item, url)
+    item.destroy
+    respond_to do |format|
+      format.html { redirect_to url }
+      format.json { head :no_content }
+    end
+  end
 end

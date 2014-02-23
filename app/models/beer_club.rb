@@ -1,7 +1,7 @@
 class BeerClub < ActiveRecord::Base
   def future_year
-    if year > Date.today.year
-      errors.add(:year, "seems to be incorrect")
+    if founded > Date.today.year
+      errors.add(:founded, "seems to be incorrect")
     end
   end
 

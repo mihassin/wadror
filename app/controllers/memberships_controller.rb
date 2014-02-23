@@ -45,15 +45,7 @@ class MembershipsController < ApplicationController
   # PATCH/PUT /memberships/1
   # PATCH/PUT /memberships/1.json
   def update
-    respond_to do |format|
-      if @membership.update(membership_params)
-        format.html { redirect_to @membership, notice: 'Membership was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @membership.errors, status: :unprocessable_entity }
-      end
-    end
+    update_item(@membership, membership_params, "Membership")
   end
 
   # DELETE /memberships/1

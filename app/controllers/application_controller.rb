@@ -31,6 +31,18 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def update_item(item, item_params, msg)
+    respond_to do |format|
+      if item.update(membership_params)
+        format.html { redirect_to item, notice: msg+' was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: 'edit' }
+        format.json { render json: item.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def destroy_item(item, url)
     item.destroy
     respond_to do |format|

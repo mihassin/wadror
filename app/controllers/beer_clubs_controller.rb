@@ -47,15 +47,7 @@ class BeerClubsController < ApplicationController
   # PATCH/PUT /beer_clubs/1
   # PATCH/PUT /beer_clubs/1.json
   def update
-    respond_to do |format|
-      if @beer_club.update(beer_club_params)
-        format.html { redirect_to @beer_club, notice: 'Beer club was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @beer_club.errors, status: :unprocessable_entity }
-      end
-    end
+    update_item(@beer_club, beer_club_params, "Beer Club")
   end
 
   # DELETE /beer_clubs/1

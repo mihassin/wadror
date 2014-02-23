@@ -42,15 +42,7 @@ class StylesController < ApplicationController
   # PATCH/PUT /styles/1
   # PATCH/PUT /styles/1.json
   def update
-    respond_to do |format|
-      if @style.update(style_params)
-        format.html { redirect_to @style, notice: 'Style was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @style.errors, status: :unprocessable_entity }
-      end
-    end
+    update_item(@style, style_params, "Style")
   end
 
   # DELETE /styles/1

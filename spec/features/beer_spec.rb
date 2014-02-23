@@ -19,7 +19,7 @@ describe 'Beer' do
 
     expect(current_path).to eq(beers_path)
     expect(Beer.count).to eq(1)
-    expect(page).to have_content "Listing beers"
+    expect(page).to have_content "Beers"
   end
 
   it "has invalid name" do

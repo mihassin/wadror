@@ -38,11 +38,15 @@ class UsersController < ApplicationController
     end
   end
 
+  def demanded
+    return true if @user == current_user and @user.update(user_params)
+  end
+
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
-      if user_params[:username].nil? and @user == current_user and @user.update(user_params)
+      if user_params[:username].nil? and demanded
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
         format.json { head :no_content }
       else

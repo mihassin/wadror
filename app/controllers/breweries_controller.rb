@@ -2,28 +2,25 @@ class BreweriesController < ApplicationController
   before_action :set_brewery, only: [:show, :edit, :update, :destroy]
   before_action :ensure_that_signed_in, except: [:index, :show]
   before_action :ensure_that_admin, only: [:destroy]
-  before_action :expiring, only: [:create, :update, :destroy]
-  before_action :skip_if_cached, only: [:index]
-
-  def expiring
-    expire_fragment('beerlist')
-  end
+  before_action :skip_if_cached, only:[:index]
 
   def skip_if_cached
-    @order = params[:order] || 'name'
-    return render :index if fragment_exist?( 'brewerylist' )
-  end
+      @order = params[:order] || 'name'
+      return render :index if fragment_exist? "brewerylist-#{@order}"
+    end
 
   # GET /breweries
   # GET /breweries.json
   def index
-    @breweries = Brewery.all
-    @active_breweries = Brewery.active
-    @retired_breweries = Brewery.retired
+    @breweries = Brewery.includes(:beers, :ratings).all
+    @active_breweries = Brewery.includes(:beers, :ratings).active
+    @retired_breweries = Brewery.includes(:beers, :ratings).retired
 
     case @order
-      when 'name' then @breweries.sort_by!{ |b| b.name }
-      when 'year' then @breweries.sort_by!{ |b| b.year }
+      when 'name' then
+        @breweries.sort_by!{ |b| b.name }
+      when 'year' then
+        @breweries.sort_by!{ |b| b.year }
     end
   end
 
@@ -43,20 +40,13 @@ class BreweriesController < ApplicationController
 
   def list
   end
+
   # POST /breweries
   # POST /breweries.json
   def create
     @brewery = Brewery.new(brewery_params)
-
-    respond_to do |format|
-      if @brewery.save
-        format.html { redirect_to @brewery, notice: 'Brewery was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @brewery }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @brewery.errors, status: :unprocessable_entity }
-      end
-    end
+    ["brewerylist-name", "brewerylist-year"].each{ |f| expire_fragment(f) }
+    create_item(@brewery, "Brewery")
   end
 
   # PATCH/PUT /breweries/1
@@ -64,6 +54,7 @@ class BreweriesController < ApplicationController
   def update
     respond_to do |format|
       if @brewery.update(brewery_params)
+        ["brewerylist-name", "brewerylist-year"].each{ |f| expire_fragment(f) }
         format.html { redirect_to @brewery, notice: 'Brewery was successfully updated.' }
         format.json { head :no_content }
       else
@@ -76,7 +67,12 @@ class BreweriesController < ApplicationController
   # DELETE /breweries/1
   # DELETE /breweries/1.json
   def destroy
-    destroy_item(@brewery, breweries_url)
+    @brewery.destroy
+        ["brewerylist-name", "brewerylist-year"].each{ |f| expire_fragment(f) }
+    respond_to do |format|
+      format.html { redirect_to breweries_url }
+      format.json { head :no_content }
+    end
   end
 
   def toggle_activity

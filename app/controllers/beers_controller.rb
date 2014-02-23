@@ -3,7 +3,7 @@ class BeersController < ApplicationController
   before_action :set_brewery_and_style, only: [:create, :edit, :new]
   before_action :ensure_that_signed_in, except: [:index, :show, :list]
   before_action :ensure_that_admin, only: [:destroy]
-  before_action :expiring, only: [:create, :update, :destroy]
+  before_action :auto_expire, only: [:destroy, :create, :update]
   before_action :skip_if_cached, only: [:index]
 
   def set_brewery_and_style
@@ -11,9 +11,13 @@ class BeersController < ApplicationController
     @styles = Style.all
   end
 
+  def auto_expire
+    ["beerlist-name", "beerlist-brewery", "beerlist-style"].each{ |f| expire_fragment(f) }
+  end
+
   def skip_if_cached
     @order = params[:order] || 'name'
-    return render :index if fragment_exist?( 'beerlist' )
+    return render :index if fragment_exist?( "beerlist-#{params[:order]}"  )
   end
 
   # GET /beers
@@ -23,8 +27,8 @@ class BeersController < ApplicationController
 
     case @order
       when 'name' then @beers.sort_by!{ |b| b.name }
-      when 'style' then @beers.sort_by!{ |b| b.style.name }
       when 'brewery' then @beers.sort_by!{ |b| b.brewery.name }
+      when 'style' then @beers.sort_by!{ |b| b.style.name }
     end
   end
 
@@ -82,7 +86,11 @@ class BeersController < ApplicationController
   # DELETE /beers/1
   # DELETE /beers/1.json
   def destroy
-    destroy_item(@beer, beers_url)
+    @beer.destroy
+    respond_to do |format|
+      format.html { redirect_to beers_url }
+      format.json { head :no_content }
+    end
   end
 
   private
@@ -94,9 +102,5 @@ class BeersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def beer_params
       params.require(:beer).permit(:name, :style_id, :brewery_id)
-    end
-
-    def expiring
-      expire_fragment('beerlist')
     end
 end

@@ -1,6 +1,7 @@
 <h1>Beers</h1>
 
-<% cache 'beerlist', skip_digest: true do %>
+<% cache "beerlist-#{@order}", skip_digest: true do %>
+
 <table class="table table-hover">
   <thead>
     <tr>

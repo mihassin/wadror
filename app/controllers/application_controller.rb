@@ -19,6 +19,18 @@ class ApplicationController < ActionController::Base
     redirect_to :back, notice:'only admins are allowed' unless current_user.admin?
   end
 
+  def create_item(item, msg)
+    respond_to do |format|
+      if item.save
+        format.html { redirect_to item, notice: msg+' was successfully created.' }
+        format.json { render action: 'show', status: :created, location: item }
+      else
+        format.html { render action: 'new' }
+        format.json { render json: item.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def destroy_item(item, url)
     item.destroy
     respond_to do |format|
